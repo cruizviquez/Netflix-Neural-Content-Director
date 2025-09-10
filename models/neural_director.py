@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier
 from sklearn.preprocessing import StandardScaler
 import json
 from datetime import datetime, timedelta
+# Removed opencv and tensorflow imports
 import pickle
 import os
 
@@ -230,5 +231,5 @@ class NeuralDirector:
                     'confidence': 0.9,
                     'urgency': 'low'
                 },
-                {
+            ]
                     'action
