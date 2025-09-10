@@ -91,37 +91,36 @@
         
         <!-- AI Insights Sidebar -->
         <div class="col-lg-4">
-            <!-- AI Recommendations clickable -->
+            <!-- AI Recommendations -->
             <div class="netflix-card mb-4">
                 <h5 class="card-title">
-                <i class="fas fa-brain text-primary me-2"></i>
-                AI Recommendations
+                    <i class="fas fa-brain text-primary me-2"></i>
+                    AI Recommendations
                     <span class="badge bg-success ms-2" id="recommendationCount">0</span>
                 </h5>
-    <div id="aiRecommendations">
-        <div class="ai-insight">
-            <div class="ai-insight-header">
-                <i class="fas fa-lightbulb ai-insight-icon"></i>
-                <strong>Content Optimization</strong>
-            </div>
-            <p class="mb-2">Your engagement is high! AI suggests:</p>
-            <div class="d-grid gap-2">
-                <button class="btn btn-outline-success btn-sm ai-recommendation-btn" data-action="maintain_pace">
-                    <i class="fas fa-check me-1"></i>
-                    Continue Current Pacing • Confidence: 85%
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- AI Action Feedback -->
-    <div id="aiActionFeedback" class="mt-3" style="display: none;">
-        <div class="alert alert-success alert-sm">
-            <i class="fas fa-robot me-2"></i>
-            <strong>AI Action Executed:</strong> <span id="actionDescription"></span>
-        </div>
-    </div>
-</div>
+                <div id="aiRecommendations">
+                    <div class="ai-insight">
+                        <div class="ai-insight-header">
+                            <i class="fas fa-lightbulb ai-insight-icon"></i>
+                            <strong>Content Optimization</strong>
+                        </div>
+                        <p class="mb-2">Your engagement is high! AI suggests:</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-success btn-sm ai-recommendation-btn" data-action="maintain_pace">
+                                <i class="fas fa-check me-1"></i>
+                                Continue Current Pacing • Confidence: 85%
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Action Feedback -->
+                <div id="aiActionFeedback" class="mt-3" style="display: none;">
+                    <div class="alert alert-success alert-sm">
+                        <i class="fas fa-robot me-2"></i>
+                        <strong>AI Action Executed:</strong> <span id="actionDescription"></span>
+                    </div>
+                </div>
             </div>
             
             <!-- Real-time Stats -->
@@ -134,13 +133,13 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="metric-card text-center p-2">
-                            <div class="metric-value" style="font-size: 1.5rem;" id="watchTime">12:34</div>
+                            <div class="metric-value" style="font-size: 1.5rem;" id="watchTime">00:00</div>
                             <div class="metric-label">Watch Time</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="metric-card neural text-center p-2">
-                            <div class="metric-value" style="font-size: 1.5rem;" id="interactions">23</div>
+                            <div class="metric-value" style="font-size: 1.5rem;" id="interactions">0</div>
                             <div class="metric-label">Interactions</div>
                         </div>
                     </div>
@@ -149,11 +148,11 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between mb-1">
                         <span>Pause Events</span>
-                        <span id="pauseCount" class="fw-bold">3</span>
+                        <span id="pauseCount" class="fw-bold">0</span>
                     </div>
                     <div class="d-flex justify-content-between mb-1">
                         <span>Rewind Events</span>
-                        <span id="rewindCount" class="fw-bold text-success">1</span>
+                        <span id="rewindCount" class="fw-bold text-success">0</span>
                     </div>
                     <div class="d-flex justify-content-between mb-1">
                         <span>Skip Events</span>
@@ -162,7 +161,7 @@
                 </div>
                 
                 <div class="engagement-meter mb-2">
-                    <div class="engagement-fill" style="width: 73%;"></div>
+                    <div class="engagement-fill" style="width: 78%;"></div>
                 </div>
                 <div class="text-center">
                     <small class="text-muted">Session Engagement Trend</small>
@@ -179,22 +178,8 @@
                     <div class="d-flex align-items-start mb-2">
                         <span class="status-indicator status-online mt-1 me-2"></span>
                         <div class="flex-grow-1">
-                            <small class="text-muted">12:34:56</small>
-                            <div class="small">AI detected high engagement - maintaining current pace</div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-2">
-                        <span class="status-indicator status-processing mt-1 me-2"></span>
-                        <div class="flex-grow-1">
-                            <small class="text-muted">12:33:12</small>
-                            <div class="small">Engagement dropped - suggested scene transition</div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-2">
-                        <span class="status-indicator status-online mt-1 me-2"></span>
-                        <div class="flex-grow-1">
-                            <small class="text-muted">12:31:45</small>
-                            <div class="small">Session started - initializing AI models</div>
+                            <small class="text-muted">Just now</small>
+                            <div class="small">Session started - AI models initialized</div>
                         </div>
                     </div>
                 </div>
@@ -249,6 +234,7 @@ class NeuralViewer {
         this.currentTime = 0;
         this.totalTime = 45 * 60; // 45 minutes in seconds
         this.engagementScore = 0.78;
+        this.playbackInterval = null;
         this.interactions = {
             pauses: 0,
             rewinds: 0,
@@ -258,261 +244,11 @@ class NeuralViewer {
         
         this.initializeEventListeners();
         this.initializeSocketConnection();
+        this.initializeAIRecommendations();
         this.startEngagementSimulation();
+        
+        console.log('Neural Viewer initialized with session:', this.sessionId);
     }
-
-    // Add these methods to the NeuralViewer class in templates/viewer.html
-
-initializeAIRecommendations() {
-    // Add event listeners for AI recommendation buttons
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('ai-recommendation-btn')) {
-            const action = e.target.dataset.action;
-            const confidence = e.target.dataset.confidence || '85';
-            this.executeAIRecommendation(action, confidence);
-        }
-    });
-}
-
-executeAIRecommendation(action, confidence) {
-    let actionDescription = '';
-    let engagementImpact = 0;
-    
-    switch(action) {
-        case 'suggest_skip':
-            this.currentTime = Math.min(this.totalTime, this.currentTime + 300); // Skip 5 minutes
-            this.updateProgressBar();
-            actionDescription = 'Skipped to exciting scene at AI recommendation';
-            engagementImpact = 0.15;
-            document.getElementById('currentScene').textContent = 'Action Scene';
-            break;
-            
-        case 'recommend_similar':
-            actionDescription = 'AI recommended similar content - switching to Action Thriller';
-            engagementImpact = 0.20;
-            this.showContentSwitch();
-            break;
-            
-        case 'pace_adjustment':
-            actionDescription = 'AI increased content pacing by 15%';
-            engagementImpact = 0.10;
-            document.getElementById('currentScene').textContent = 'Fast-Paced Scene';
-            break;
-            
-        case 'extend_content':
-            actionDescription = 'AI unlocked bonus behind-the-scenes content';
-            engagementImpact = 0.12;
-            this.showBonusContent();
-            break;
-            
-        case 'maintain_pace':
-            actionDescription = 'AI maintained optimal content pacing';
-            engagementImpact = 0.05;
-            break;
-            
-        case 'scene_reorder':
-            this.currentTime = Math.min(this.totalTime, this.currentTime + 180); // Skip 3 minutes
-            this.updateProgressBar();
-            actionDescription = 'AI reordered scenes for better engagement flow';
-            engagementImpact = 0.18;
-            document.getElementById('currentScene').textContent = 'Climax Scene';
-            break;
-            
-        default:
-            actionDescription = 'AI optimization applied successfully';
-            engagementImpact = 0.08;
-    }
-    
-    // Apply engagement improvement
-    this.engagementScore = Math.min(1.0, this.engagementScore + engagementImpact);
-    this.updateEngagementDisplay();
-    
-    // Show action feedback
-    this.showAIActionFeedback(actionDescription);
-    
-    // Log the action
-    this.addOptimizationLog(`AI Recommendation Executed: ${actionDescription}`);
-    
-    // Update recommendation count
-    const count = parseInt(document.getElementById('recommendationCount').textContent) + 1;
-    document.getElementById('recommendationCount').textContent = count;
-    
-    // Send to backend
-    this.sendEngagementData('ai_recommendation_executed', { action, confidence });
-    
-    // Generate new recommendations
-    setTimeout(() => {
-        this.generateNewRecommendations();
-    }, 2000);
-}
-
-showAIActionFeedback(description) {
-    const feedback = document.getElementById('aiActionFeedback');
-    document.getElementById('actionDescription').textContent = description;
-    feedback.style.display = 'block';
-    
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-        feedback.style.display = 'none';
-    }, 5000);
-}
-
-showContentSwitch() {
-    const videoPlayer = document.getElementById('videoPlayer');
-    videoPlayer.innerHTML = `
-        <i class="fas fa-film mb-3" style="font-size: 4rem;"></i>
-        <h4>Recommended Content: "High-Octane Thriller"</h4>
-        <p>AI-selected for 92% engagement match</p>
-        <small class="text-success">Content switched based on your preferences</small>
-    `;
-    
-    document.getElementById('contentTitle').textContent = 'High-Octane Thriller';
-    document.getElementById('contentGenre').textContent = 'Action/Thriller';
-}
-
-showBonusContent() {
-    const videoPlayer = document.getElementById('videoPlayer');
-    const originalContent = videoPlayer.innerHTML;
-    
-    videoPlayer.innerHTML = `
-        <i class="fas fa-star mb-3 text-warning" style="font-size: 4rem;"></i>
-        <h4>Bonus Content Unlocked!</h4>
-        <p>Behind-the-scenes: Director's Commentary</p>
-        <small class="text-warning">Exclusive content based on high engagement</small>
-    `;
-    
-    // Restore original content after 3 seconds
-    setTimeout(() => {
-        videoPlayer.innerHTML = originalContent;
-    }, 3000);
-}
-
-updateAIRecommendations(recommendations) {
-    const container = document.getElementById('aiRecommendations');
-    container.innerHTML = '';
-    
-    if (recommendations && recommendations.length > 0) {
-        recommendations.forEach(rec => {
-            const insight = document.createElement('div');
-            insight.className = rec.urgency === 'high' ? 'ai-insight ai-insight-urgent' : 'ai-insight';
-            
-            // Create clickable button for each recommendation
-            const buttonClass = this.getRecommendationButtonClass(rec.urgency);
-            const buttonIcon = this.getRecommendationIcon(rec.action);
-            
-            insight.innerHTML = `
-                <div class="ai-insight-header">
-                    <i class="fas fa-robot ai-insight-icon"></i>
-                    <strong>${rec.action.replace('_', ' ').toUpperCase()}</strong>
-                    <span class="badge bg-${rec.urgency === 'high' ? 'danger' : 'primary'} ms-auto">
-                        ${Math.round(rec.confidence * 100)}%
-                    </span>
-                </div>
-                <p class="mb-2">${rec.message}</p>
-                <div class="d-grid gap-1">
-                    <button class="btn ${buttonClass} btn-sm ai-recommendation-btn" 
-                            data-action="${rec.action}" 
-                            data-confidence="${rec.confidence}">
-                        <i class="${buttonIcon} me-1"></i>
-                        Execute AI Recommendation
-                    </button>
-                    <small class="text-muted">
-                        Confidence: ${Math.round(rec.confidence * 100)}% • Priority: ${rec.urgency}
-                    </small>
-                </div>
-            `;
-            container.appendChild(insight);
-        });
-    } else {
-        // Default recommendation when none provided
-        container.innerHTML = `
-            <div class="ai-insight">
-                <div class="ai-insight-header">
-                    <i class="fas fa-check-circle ai-insight-icon text-success"></i>
-                    <strong>Optimal Performance</strong>
-                </div>
-                <p class="mb-2">Content is performing well - maintaining current experience</p>
-                <div class="d-grid gap-1">
-                    <button class="btn btn-outline-success btn-sm ai-recommendation-btn" 
-                            data-action="maintain_pace">
-                        <i class="fas fa-check me-1"></i>
-                        Continue Current Optimization
-                    </button>
-                    <small class="text-muted">AI monitoring continues...</small>
-                </div>
-            </div>
-        `;
-    }
-}
-
-getRecommendationButtonClass(urgency) {
-    switch(urgency) {
-        case 'high': return 'btn-danger';
-        case 'medium': return 'btn-warning';
-        default: return 'btn-primary';
-    }
-}
-
-getRecommendationIcon(action) {
-    const icons = {
-        'suggest_skip': 'fas fa-fast-forward',
-        'recommend_similar': 'fas fa-exchange-alt',
-        'pace_adjustment': 'fas fa-tachometer-alt',
-        'extend_content': 'fas fa-plus-circle',
-        'maintain_pace': 'fas fa-check',
-        'scene_reorder': 'fas fa-sort'
-    };
-    return icons[action] || 'fas fa-magic';
-}
-
-generateNewRecommendations() {
-    // Generate contextual recommendations based on current state
-    const recommendations = [];
-    
-    if (this.engagementScore < 0.5) {
-        recommendations.push({
-            action: 'suggest_skip',
-            message: '⏭️ Skip to next exciting scene?',
-            confidence: 0.8,
-            urgency: 'high'
-        });
-        recommendations.push({
-            action: 'recommend_similar',
-            message: '🎯 Switch to more engaging content?',
-            confidence: 0.75,
-            urgency: 'high'
-        });
-    } else if (this.engagementScore < 0.7) {
-        recommendations.push({
-            action: 'pace_adjustment',
-            message: '⚡ Increase content pacing?',
-            confidence: 0.73,
-            urgency: 'medium'
-        });
-        recommendations.push({
-            action: 'scene_reorder',
-            message: '🔄 Reorder scenes for better flow?',
-            confidence: 0.68,
-            urgency: 'medium'
-        });
-    } else {
-        recommendations.push({
-            action: 'extend_content',
-            message: '🎬 Unlock exclusive bonus content?',
-            confidence: 0.9,
-            urgency: 'low'
-        });
-    }
-    
-    this.updateAIRecommendations(recommendations);
-}
-
-// Update the constructor to include AI recommendations initialization
-constructor(sessionId) {
-    // ... existing constructor code ...
-    
-    this.initializeAIRecommendations();
-}
     
     initializeEventListeners() {
         // Video Controls
@@ -531,10 +267,21 @@ constructor(sessionId) {
         document.getElementById('progressBar').addEventListener('click', (e) => this.seekTo(e));
     }
     
+    initializeAIRecommendations() {
+        // Add event listeners for AI recommendation buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('ai-recommendation-btn')) {
+                const action = e.target.dataset.action;
+                const confidence = e.target.dataset.confidence || '85';
+                this.executeAIRecommendation(action, confidence);
+            }
+        });
+    }
+    
     initializeSocketConnection() {
         this.socket.on('connect', () => {
             console.log('Connected to Neural Content Director');
-            this.addOptimizationLog('Connected to AI engine - initializing models');
+            this.addOptimizationLog('Connected to AI engine - models initialized');
         });
         
         this.socket.on('content_optimization', (data) => {
@@ -556,11 +303,13 @@ constructor(sessionId) {
             playIcon.className = 'fas fa-pause';
             this.startPlayback();
             this.sendEngagementData('play');
+            this.addOptimizationLog('Video playback started - AI monitoring engagement');
         } else {
             playIcon.className = 'fas fa-play';
             this.sendEngagementData('pause');
             this.interactions.pauses++;
             this.updateInteractionCounts();
+            this.addOptimizationLog('Video paused - analyzing user behavior');
         }
     }
     
@@ -571,6 +320,7 @@ constructor(sessionId) {
             this.sendEngagementData('pause');
             this.interactions.pauses++;
             this.updateInteractionCounts();
+            this.addOptimizationLog('Manual pause detected - engagement analysis in progress');
         }
     }
     
@@ -580,7 +330,12 @@ constructor(sessionId) {
         this.sendEngagementData('rewind');
         this.interactions.rewinds++;
         this.updateInteractionCounts();
-        this.addOptimizationLog('User rewound content - analyzing engagement pattern');
+        this.addOptimizationLog('User rewound content - high interest detected');
+        
+        // Generate positive AI recommendation for rewind
+        setTimeout(() => {
+            this.generateRewindRecommendation();
+        }, 1000);
     }
     
     skip() {
@@ -590,6 +345,11 @@ constructor(sessionId) {
         this.interactions.skips++;
         this.updateInteractionCounts();
         this.addOptimizationLog('Skip detected - AI evaluating content optimization');
+        
+        // Generate skip-based recommendations
+        setTimeout(() => {
+            this.generateSkipRecommendation();
+        }, 1000);
     }
     
     seekTo(event) {
@@ -599,6 +359,7 @@ constructor(sessionId) {
         this.currentTime = Math.floor(this.totalTime * percentage);
         this.updateProgressBar();
         this.sendEngagementData('seek');
+        this.addOptimizationLog('User seeking in timeline - preferences noted');
     }
     
     startPlayback() {
@@ -612,6 +373,11 @@ constructor(sessionId) {
                 // Simulate engagement changes
                 if (this.currentTime % 30 === 0) {
                     this.simulateEngagementChange();
+                }
+                
+                // Generate contextual recommendations
+                if (this.currentTime % 60 === 0) {
+                    this.generateContextualRecommendations();
                 }
             }
         }, 1000);
@@ -629,7 +395,7 @@ constructor(sessionId) {
         document.getElementById('timeDisplay').textContent = 
             `${currentMin.toString().padStart(2, '0')}:${currentSec.toString().padStart(2, '0')} / ${totalMin}:${totalSec.toString().padStart(2, '0')}`;
         
-                     // Update watch time display
+        // Update watch time display
         document.getElementById('watchTime').textContent = 
             `${currentMin.toString().padStart(2, '0')}:${currentSec.toString().padStart(2, '0')}`;
     }
@@ -668,16 +434,150 @@ constructor(sessionId) {
         }
     }
     
-    sendEngagementData(action) {
+    sendEngagementData(action, additionalData = {}) {
+        const data = {
+            session_id: this.sessionId,
+            action: action,
+            video_time: this.currentTime,
+                sendEngagementData(action, additionalData = {}) {
         const data = {
             session_id: this.sessionId,
             action: action,
             video_time: this.currentTime,
             engagement_score: this.engagementScore,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            ...additionalData
         };
         
         this.socket.emit('engagement_data', data);
+    }
+    
+    executeAIRecommendation(action, confidence) {
+        let actionDescription = '';
+        let engagementImpact = 0;
+        
+        switch(action) {
+            case 'suggest_skip':
+                this.currentTime = Math.min(this.totalTime, this.currentTime + 300); // Skip 5 minutes
+                this.updateProgressBar();
+                actionDescription = 'Skipped to exciting scene at AI recommendation';
+                engagementImpact = 0.15;
+                document.getElementById('currentScene').textContent = 'Action Scene';
+                break;
+                
+            case 'recommend_similar':
+                actionDescription = 'AI recommended similar content - switching to Action Thriller';
+                engagementImpact = 0.20;
+                this.showContentSwitch();
+                break;
+                
+            case 'pace_adjustment':
+                actionDescription = 'AI increased content pacing by 15%';
+                engagementImpact = 0.10;
+                document.getElementById('currentScene').textContent = 'Fast-Paced Scene';
+                break;
+                
+            case 'extend_content':
+                actionDescription = 'AI unlocked bonus behind-the-scenes content';
+                engagementImpact = 0.12;
+                this.showBonusContent();
+                break;
+                
+            case 'maintain_pace':
+                actionDescription = 'AI maintained optimal content pacing';
+                engagementImpact = 0.05;
+                break;
+                
+            case 'scene_reorder':
+                this.currentTime = Math.min(this.totalTime, this.currentTime + 180); // Skip 3 minutes
+                this.updateProgressBar();
+                actionDescription = 'AI reordered scenes for better engagement flow';
+                engagementImpact = 0.18;
+                document.getElementById('currentScene').textContent = 'Climax Scene';
+                break;
+                
+            default:
+                actionDescription = 'AI optimization applied successfully';
+                engagementImpact = 0.08;
+        }
+        
+        // Apply engagement improvement
+        this.engagementScore = Math.min(1.0, this.engagementScore + engagementImpact);
+        this.updateEngagementDisplay();
+        
+        // Show action feedback
+        this.showAIActionFeedback(actionDescription);
+        
+        // Log the action
+        this.addOptimizationLog(`AI Recommendation Executed: ${actionDescription}`);
+        
+        // Update recommendation count
+        const count = parseInt(document.getElementById('recommendationCount').textContent) + 1;
+        document.getElementById('recommendationCount').textContent = count;
+        
+        // Send to backend
+        this.sendEngagementData('ai_recommendation_executed', { action, confidence });
+        
+        // Generate new recommendations after a delay
+        setTimeout(() => {
+            this.generateNewRecommendations();
+        }, 2000);
+    }
+    
+    showAIActionFeedback(description) {
+        const feedback = document.getElementById('aiActionFeedback');
+        document.getElementById('actionDescription').textContent = description;
+        feedback.style.display = 'block';
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            feedback.style.display = 'none';
+        }, 5000);
+    }
+    
+    showContentSwitch() {
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.innerHTML = `
+            <i class="fas fa-film mb-3" style="font-size: 4rem; color: var(--neural-blue);"></i>
+            <h4>Recommended Content: "High-Octane Thriller"</h4>
+            <p>AI-selected for 92% engagement match</p>
+            <small class="text-success">Content switched based on your preferences</small>
+        `;
+        
+        document.getElementById('contentTitle').textContent = 'High-Octane Thriller';
+        document.getElementById('contentGenre').textContent = 'Action/Thriller';
+        
+        // Restore after 4 seconds
+        setTimeout(() => {
+            this.restoreOriginalVideo();
+        }, 4000);
+    }
+    
+    showBonusContent() {
+        const videoPlayer = document.getElementById('videoPlayer');
+        const originalContent = videoPlayer.innerHTML;
+        
+        videoPlayer.innerHTML = `
+            <i class="fas fa-star mb-3 text-warning" style="font-size: 4rem;"></i>
+            <h4>Bonus Content Unlocked!</h4>
+            <p>Behind-the-scenes: Director's Commentary</p>
+            <small class="text-warning">Exclusive content based on high engagement</small>
+        `;
+        
+        // Restore original content after 4 seconds
+        setTimeout(() => {
+            this.restoreOriginalVideo();
+        }, 4000);
+    }
+    
+    restoreOriginalVideo() {
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.innerHTML = `
+            <i class="fas fa-film mb-3" style="font-size: 4rem;"></i>
+            <h4>Action Thriller Demo</h4>
+            <p>AI-optimized content delivery</p>
+            <small class="text-muted">Click controls below to simulate viewing</small>
+        `;
     }
     
     handleAIOptimization(data) {
@@ -693,8 +593,8 @@ constructor(sessionId) {
         this.addOptimizationLog(`AI optimization: ${data.recommendations[0]?.message || 'Content optimized'}`);
         
         // Update engagement if AI suggests improvement
-        if (data.recommendations.length > 0) {
-            this.engagementScore = Math.min(1.0, this.engagementScore + 0.1);
+        if (data.recommendations && data.recommendations.length > 0) {
+            this.engagementScore = Math.min(1.0, this.engagementScore + 0.05);
             this.updateEngagementDisplay();
         }
     }
@@ -707,28 +607,153 @@ constructor(sessionId) {
             recommendations.forEach(rec => {
                 const insight = document.createElement('div');
                 insight.className = rec.urgency === 'high' ? 'ai-insight ai-insight-urgent' : 'ai-insight';
+                
+                // Create clickable button for each recommendation
+                const buttonClass = this.getRecommendationButtonClass(rec.urgency);
+                const buttonIcon = this.getRecommendationIcon(rec.action);
+                
                 insight.innerHTML = `
                     <div class="ai-insight-header">
                         <i class="fas fa-robot ai-insight-icon"></i>
                         <strong>${rec.action.replace('_', ' ').toUpperCase()}</strong>
-                        <span class="badge bg-primary ms-auto">${Math.round(rec.confidence * 100)}%</span>
+                        <span class="badge bg-${rec.urgency === 'high' ? 'danger' : 'primary'} ms-auto">
+                            ${Math.round(rec.confidence * 100)}%
+                        </span>
                     </div>
-                    <p class="mb-1">${rec.message}</p>
-                    <small class="text-muted">Confidence: ${Math.round(rec.confidence * 100)}% • Priority: ${rec.urgency}</small>
+                    <p class="mb-2">${rec.message}</p>
+                    <div class="d-grid gap-1">
+                        <button class="btn ${buttonClass} btn-sm ai-recommendation-btn" 
+                                data-action="${rec.action}" 
+                                data-confidence="${rec.confidence}">
+                            <i class="${buttonIcon} me-1"></i>
+                            Execute AI Recommendation
+                        </button>
+                        <small class="text-muted">
+                            Confidence: ${Math.round(rec.confidence * 100)}% • Priority: ${rec.urgency}
+                        </small>
+                    </div>
                 `;
                 container.appendChild(insight);
             });
         } else {
-            container.innerHTML = `
-                <div class="ai-insight">
-                    <div class="ai-insight-header">
-                        <i class="fas fa-check-circle ai-insight-icon text-success"></i>
-                        <strong>Optimal Performance</strong>
-                    </div>
-                    <p class="mb-1">Content is performing well - no optimization needed</p>
+            // Default recommendation when none provided
+            this.showDefaultRecommendation();
+        }
+    }
+    
+    showDefaultRecommendation() {
+        const container = document.getElementById('aiRecommendations');
+        container.innerHTML = `
+            <div class="ai-insight">
+                <div class="ai-insight-header">
+                    <i class="fas fa-check-circle ai-insight-icon text-success"></i>
+                    <strong>Optimal Performance</strong>
+                </div>
+                <p class="mb-2">Content is performing well - maintaining current experience</p>
+                <div class="d-grid gap-1">
+                    <button class="btn btn-outline-success btn-sm ai-recommendation-btn" 
+                            data-action="maintain_pace">
+                        <i class="fas fa-check me-1"></i>
+                        Continue Current Optimization
+                    </button>
                     <small class="text-muted">AI monitoring continues...</small>
                 </div>
-            `;
+            </div>
+        `;
+    }
+    
+    getRecommendationButtonClass(urgency) {
+        switch(urgency) {
+            case 'high': return 'btn-danger';
+            case 'medium': return 'btn-warning';
+            default: return 'btn-primary';
+        }
+    }
+    
+    getRecommendationIcon(action) {
+        const icons = {
+            'suggest_skip': 'fas fa-fast-forward',
+            'recommend_similar': 'fas fa-exchange-alt',
+            'pace_adjustment': 'fas fa-tachometer-alt',
+            'extend_content': 'fas fa-plus-circle',
+            'maintain_pace': 'fas fa-check',
+            'scene_reorder': 'fas fa-sort'
+        };
+        return icons[action] || 'fas fa-magic';
+    }
+    
+    generateNewRecommendations() {
+        // Generate contextual recommendations based on current state
+        const recommendations = [];
+        
+        if (this.engagementScore < 0.4) {
+            recommendations.push({
+                action: 'suggest_skip',
+                message: '⏭️ Skip to next exciting scene?',
+                confidence: 0.8,
+                urgency: 'high'
+            });
+            recommendations.push({
+                action: 'recommend_similar',
+                message: '🎯 Switch to more engaging content?',
+                confidence: 0.75,
+                urgency: 'high'
+            });
+        } else if (this.engagementScore < 0.7) {
+            recommendations.push({
+                action: 'pace_adjustment',
+                message: '⚡ Increase content pacing?',
+                confidence: 0.73,
+                urgency: 'medium'
+            });
+            recommendations.push({
+                action: 'scene_reorder',
+                message: '🔄 Reorder scenes for better flow?',
+                confidence: 0.68,
+                urgency: 'medium'
+            });
+        } else {
+            recommendations.push({
+                action: 'extend_content',
+                message: '🎬 Unlock exclusive bonus content?',
+                confidence: 0.9,
+                urgency: 'low'
+            });
+        }
+        
+        this.updateAIRecommendations(recommendations);
+    }
+    
+    generateRewindRecommendation() {
+        const recommendations = [{
+            action: 'maintain_pace',
+            message: '✨ High interest detected - maintaining scene focus',
+            confidence: 0.9,
+            urgency: 'low'
+        }];
+        this.updateAIRecommendations(recommendations);
+    }
+    
+    generateSkipRecommendation() {
+        const recommendations = [{
+            action: 'suggest_skip',
+            message: '⚡ Disengagement detected - jump to action scene?',
+            confidence: 0.85,
+            urgency: 'high'
+        }];
+        this.updateAIRecommendations(recommendations);
+    }
+    
+    generateContextualRecommendations() {
+        // Generate recommendations based on current engagement and time
+        if (this.currentTime > 300 && this.engagementScore > 0.8) { // 5 minutes in, high engagement
+            const recommendations = [{
+                action: 'extend_content',
+                message: '🌟 High engagement - show bonus material?',
+                confidence: 0.88,
+                urgency: 'low'
+            }];
+            this.updateAIRecommendations(recommendations);
         }
     }
     
@@ -768,6 +793,11 @@ constructor(sessionId) {
         this.addOptimizationLog('Manual optimization requested - AI analyzing content');
         this.sendEngagementData('force_optimization');
         this.showNotification('AI optimization in progress...');
+        
+        // Generate immediate recommendations
+        setTimeout(() => {
+            this.generateNewRecommendations();
+        }, 1000);
     }
     
     skipToScene() {
@@ -776,21 +806,51 @@ constructor(sessionId) {
         this.addOptimizationLog('Jumped to action scene - analyzing user preference');
         this.sendEngagementData('scene_skip');
         this.showNotification('Skipped to high-action scene');
+        document.getElementById('currentScene').textContent = 'Action Scene';
     }
     
     showInsights() {
         this.addOptimizationLog('AI insights displayed to user');
         this.showNotification('Detailed AI analysis available');
+        
+        // Show special insights recommendation
+        const recommendations = [{
+            action: 'maintain_pace',
+            message: '📊 User actively seeking insights - high engagement confirmed',
+            confidence: 0.95,
+            urgency: 'low'
+        }];
+        this.updateAIRecommendations(recommendations);
     }
     
     resetSession() {
         this.currentTime = 0;
         this.engagementScore = 0.78;
         this.interactions = { pauses: 0, rewinds: 0, skips: 0, total: 0 };
+        this.isPlaying = false;
+        
+        // Reset UI
+        document.getElementById('playIcon').className = 'fas fa-play';
+        document.getElementById('currentScene').textContent = 'Opening Sequence';
+        document.getElementById('recommendationCount').textContent = '0';
+        
         this.updateProgressBar();
         this.updateEngagementDisplay();
         this.updateInteractionCounts();
-        this.addOptimizationLog('Session reset - AI models reinitialized');
+        this.restoreOriginalVideo();
+        this.showDefaultRecommendation();
+        
+        // Clear log
+        document.getElementById('optimizationLog').innerHTML = `
+            <div class="d-flex align-items-start mb-2">
+                <span class="status-indicator status-online mt-1 me-2"></span>
+                <div class="flex-grow-1">
+                    <small class="text-muted">Just now</small>
+                    <div class="small">Session reset - AI models reinitialized</div>
+                </div>
+            </div>
+        `;
+        
         this.showNotification('Session reset successfully');
     }
     
@@ -800,10 +860,21 @@ constructor(sessionId) {
             if (this.isPlaying) {
                 // Randomly adjust engagement based on "content type"
                 const sceneTypes = ['intro', 'dialogue', 'action', 'climax'];
-                const currentScene = sceneTypes[Math.floor(this.currentTime / 675)]; // 45min/4 scenes
+                const currentSceneIndex = Math.floor(this.currentTime / 675); // 45min/4 scenes
+                const currentScene = sceneTypes[Math.min(currentSceneIndex, 3)];
                 
-                document.getElementById('currentScene').textContent = 
-                    currentScene.charAt(0).toUpperCase() + currentScene.slice(1) + ' Scene';
+                // Update scene display
+                const sceneDisplayNames = {
+                    'intro': 'Opening Sequence',
+                    'dialogue': 'Character Development',
+                    'action': 'Action Sequence',
+                    'climax': 'Climax Scene'
+                };
+                
+                const currentSceneDisplay = document.getElementById('currentScene').textContent;
+                if (!currentSceneDisplay.includes('Action Scene') && !currentSceneDisplay.includes('Fast-Paced') && !currentSceneDisplay.includes('Climax')) {
+                    document.getElementById('currentScene').textContent = sceneDisplayNames[currentScene];
+                }
                 
                 // Adjust engagement based on scene type
                 let targetEngagement;
@@ -816,7 +887,8 @@ constructor(sessionId) {
                 
                 // Gradually move towards target engagement
                 const diff = targetEngagement - this.engagementScore;
-                this.engagementScore += diff * 0.1;
+                this.engagementScore += diff * 0.05; // Slower, more realistic change
+                this.engagementScore = Math.max(0.1, Math.min(1.0, this.engagementScore));
                 this.updateEngagementDisplay();
             }
         }, 5000);

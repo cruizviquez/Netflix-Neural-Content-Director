@@ -206,6 +206,11 @@ body {
     font-size: 2rem;
     color: var(--netflix-light-gray);
     flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.video-placeholder:hover {
+    background: linear-gradient(45deg, var(--netflix-gray), var(--netflix-dark-gray));
 }
 
 .video-controls {
@@ -240,12 +245,21 @@ body {
     box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
 }
 
+.play-btn:active {
+    transform: scale(0.95);
+}
+
 .video-progress {
     flex: 1;
     height: 4px;
     background: rgba(255,255,255,0.3);
     border-radius: 2px;
     cursor: pointer;
+    transition: height 0.3s ease;
+}
+
+.video-progress:hover {
+    height: 6px;
 }
 
 .progress-fill {
@@ -263,6 +277,11 @@ body {
     border-radius: 4px;
     overflow: hidden;
     margin: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.engagement-meter:hover {
+    height: 10px;
 }
 
 .engagement-fill {
@@ -270,6 +289,23 @@ body {
     background: linear-gradient(90deg, var(--netflix-red), var(--neural-green));
     border-radius: 4px;
     transition: width 0.5s ease;
+    position: relative;
+}
+
+.engagement-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(500%); }
 }
 
 .engagement-label {
@@ -283,6 +319,7 @@ body {
 .engagement-score {
     font-weight: bold;
     color: var(--neural-green);
+    transition: all 0.3s ease;
 }
 
 /* AI Insights */
@@ -293,6 +330,12 @@ body {
     padding: 15px;
     margin: 10px 0;
     animation: pulse-glow 2s infinite;
+    transition: all 0.3s ease;
+}
+
+.ai-insight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
 }
 
 @keyframes pulse-glow {
@@ -319,10 +362,119 @@ body {
 .ai-insight-urgent {
     border-color: var(--neural-orange);
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+    animation: urgent-pulse 1.5s infinite;
 }
 
 .ai-insight-urgent .ai-insight-icon {
     color: var(--neural-orange);
+}
+
+@keyframes urgent-pulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 107, 53, 0.7);
+    }
+}
+
+/* Interactive AI Recommendation Buttons */
+.ai-recommendation-btn {
+    transition: all 0.3s ease;
+    border: 1px solid var(--neural-blue);
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(70, 211, 105, 0.1));
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-recommendation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.ai-recommendation-btn:hover::before {
+    left: 100%;
+}
+
+.ai-recommendation-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    background: linear-gradient(45deg, var(--neural-blue), var(--neural-green));
+    color: white;
+    border-color: var(--neural-blue);
+}
+
+.ai-recommendation-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.4);
+}
+
+.ai-recommendation-btn.btn-danger:hover {
+    background: linear-gradient(45deg, var(--netflix-red), var(--neural-orange));
+    border-color: var(--netflix-red);
+}
+
+.ai-recommendation-btn.btn-warning:hover {
+    background: linear-gradient(45deg, var(--neural-orange), #ff8c42);
+    border-color: var(--neural-orange);
+}
+
+.ai-recommendation-btn.btn-primary:hover {
+    background: linear-gradient(45deg, var(--neural-blue), #0088cc);
+    border-color: var(--neural-blue);
+}
+
+/* AI Action Feedback */
+.alert-sm {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    border: 1px solid var(--neural-green);
+    background: linear-gradient(135deg, rgba(70, 211, 105, 0.1), rgba(70, 211, 105, 0.05));
+    animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Recommendation Counter Badge */
+#recommendationCount {
+    animation: pulse-count 2s infinite;
+    background: var(--neural-green) !important;
+}
+
+@keyframes pulse-count {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Content Switch Animation */
+.content-switch-animation {
+    animation: content-fade 2s ease-in-out;
+}
+
+@keyframes content-fade {
+    0% { opacity: 0; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 /* Analytics Charts */
@@ -367,6 +519,11 @@ body {
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover .metric-value {
+    transform: scale(1.1);
 }
 
 .metric-label {
@@ -388,6 +545,16 @@ body {
 .status-online {
     background: var(--neural-green);
     box-shadow: 0 0 10px rgba(70, 211, 105, 0.5);
+    animation: online-pulse 2s infinite;
+}
+
+@keyframes online-pulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(70, 211, 105, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(70, 211, 105, 0.8);
+    }
 }
 
 .status-offline {
@@ -396,15 +563,17 @@ body {
 
 .status-processing {
     background: var(--neural-orange);
-    animation: pulse 1s infinite;
+    animation: processing-pulse 1s infinite;
 }
 
-@keyframes pulse {
+@keyframes processing-pulse {
     0%, 100% {
         opacity: 1;
+        transform: scale(1);
     }
     50% {
         opacity: 0.5;
+        transform: scale(0.8);
     }
 }
 
@@ -420,6 +589,16 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    animation: live-glow 2s infinite;
+}
+
+@keyframes live-glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(70, 211, 105, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(70, 211, 105, 0.6);
+    }
 }
 
 .live-dot {
@@ -450,82 +629,7 @@ body {
     color: var(--netflix-light-gray);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-    
-    .netflix-card {
-        padding: 15px;
-    }
-    
-    .video-placeholder {
-        height: 250px;
-        font-size: 1.5rem;
-    }
-    
-    .chart-container {
-        height: 200px;
-        padding: 15px;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .metric-value {
-        font-size: 2rem;
-    }
-    
-    .btn-netflix,
-    .btn-neural {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--netflix-dark-gray);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--netflix-red);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #ff1a2b;
-}
-
-/* Loading Animation */
-.loading-spinner {
-    border: 3px solid var(--netflix-gray);
-    border-top: 3px solid var(--netflix-red);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    display: inline-block;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Notification Toast */
+/* Toast Notifications */
 .toast-notification {
     position: fixed;
     top: 100px;
@@ -538,85 +642,14 @@ body {
     z-index: 1050;
     transform: translateX(400px);
     transition: transform 0.3s ease;
+    opacity: 0;
 }
 
 .toast-notification.show {
     transform: translateX(0);
+    opacity: 1;
 }
 
 /* AI Brain Animation */
 @keyframes brain-pulse {
-    0%, 100% {
-        transform: scale(1);
-        color: var(--neural-blue);
-    }
-    50% {
-        transform: scale(1.1);
-        color: var(--neural-green);
-    }
-}
-
-.ai-brain {
-    animation: brain-pulse 2s infinite;
-    }
-    /* Interactive AI Recommendation Buttons */
-.ai-recommendation-btn {
-    transition: all 0.3s ease;
-    border: 1px solid var(--neural-blue);
-    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(70, 211, 105, 0.1));
-}
-
-.ai-recommendation-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
-    background: linear-gradient(45deg, var(--neural-blue), var(--neural-green));
-    color: white;
-    border-color: var(--neural-blue);
-}
-
-.ai-recommendation-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.4);
-}
-
-.ai-recommendation-btn.btn-danger:hover {
-    background: linear-gradient(45deg, var(--netflix-red), var(--neural-orange));
-}
-
-.ai-recommendation-btn.btn-warning:hover {
-    background: linear-gradient(45deg, var(--neural-orange), #ff8c42);
-}
-
-/* AI Action Feedback */
-.alert-sm {
-    padding: 8px 12px;
-    font-size: 0.875rem;
-    border-radius: 8px;
-    border: 1px solid var(--neural-green);
-    background: linear-gradient(135deg, rgba(70, 211, 105, 0.1), rgba(70, 211, 105, 0.05));
-}
-
-/* Recommendation Counter Badge */
-#recommendationCount {
-    animation: pulse-count 2s infinite;
-}
-
-@keyframes pulse-count {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-/* Content Switch Animation */
-.content-switch-animation {
-    animation: content-fade 2s ease-in-out;
-}
-
-@keyframes content-fade {
-    0% { opacity: 0; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.02); }
-    100% { opacity: 1; transform: scale(1); }
-}
+    0%, 100%
