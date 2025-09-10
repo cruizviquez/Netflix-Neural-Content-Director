@@ -137,4 +137,127 @@ class ContentAnalyzer:
             'high_engagement_scenes': sum(1 for p in potentials if p > 0.8),
             'medium_engagement_scenes': sum(1 for p in potentials if 0.5 <= p <= 0.8),
             'low_engagement_scenes': sum(1 for p in potentials if p < 0.5),
-            'engagement_variance': np.var(potentials),
+            'engagement_variance': float(np.var(potentials)),
+            'avg_engagement': float(np.mean(potentials)),
+            'engagement_range': float(max(potentials) - min(potentials))
+        }
+    
+    def _get_content_modifications(self, content, current_engagement):
+        """Get recommended content modifications"""
+        modifications = []
+        
+        if current_engagement < 0.5:
+            modifications.extend([
+                {
+                    'type': 'major_restructure',
+                    'priority': 'high',
+                    'description': 'Content needs significant restructuring',
+                    'actions': ['Reorder scenes', 'Cut low-engagement scenes', 'Add action sequences']
+                },
+                {
+                    'type': 'pacing_adjustment',
+                    'priority': 'high', 
+                    'description': 'Dramatically increase pacing',
+                    'actions': ['Speed up transitions', 'Reduce dialogue scenes', 'Increase visual interest']
+                }
+            ])
+        elif current_engagement < 0.7:
+            modifications.extend([
+                {
+                    'type': 'scene_optimization',
+                    'priority': 'medium',
+                    'description': 'Optimize individual scenes',
+                    'actions': ['Enhance audio', 'Improve transitions', 'Add visual effects']
+                },
+                {
+                    'type': 'content_highlighting',
+                    'priority': 'medium',
+                    'description': 'Highlight best content',
+                    'actions': ['Promote high-engagement scenes', 'Add teaser elements']
+                }
+            ])
+        else:
+            modifications.append({
+                'type': 'enhancement',
+                'priority': 'low',
+                'description': 'Content is performing well',
+                'actions': ['Minor optimizations', 'A/B test variations']
+            })
+        
+        return modifications
+    
+    def get_content_recommendations(self, user_engagement_history):
+        """Recommend content based on user's engagement history"""
+        if not user_engagement_history:
+            return list(self.content_database.keys())[:2]  # Default recommendations
+        
+        # Analyze user preferences
+        avg_engagement = np.mean([entry.get('engagement_score', 0.5) for entry in user_engagement_history])
+        preferred_genres = self._extract_preferred_genres(user_engagement_history)
+        
+        recommendations = []
+        
+        for content_id, content in self.content_database.items():
+            content_analysis = self.analyze_content(content_id)
+            
+            # Score content based on user preferences
+            score = self._calculate_recommendation_score(
+                content_analysis, avg_engagement, preferred_genres
+            )
+            
+            recommendations.append({
+                'content_id': content_id,
+                'title': content['title'],
+                'genre': content['genre'],
+                'score': score,
+                'predicted_engagement': content_analysis['predicted_engagement']
+            })
+        
+        # Sort by score and return top recommendations
+        recommendations.sort(key=lambda x: x['score'], reverse=True)
+        return recommendations[:3]
+    
+    def _extract_preferred_genres(self, engagement_history):
+        """Extract preferred genres from engagement history"""
+        # This is a simplified version - in practice, you'd track content IDs
+        # and map them to genres based on what content the user engaged with
+        return ['action', 'drama']  # Default preferences
+    
+    def _calculate_recommendation_score(self, content_analysis, user_avg_engagement, preferred_genres):
+        """Calculate recommendation score for content"""
+        base_score = content_analysis['predicted_engagement']
+        
+        # Boost score if genre matches preferences
+        if content_analysis['genre'] in preferred_genres:
+            base_score *= 1.2
+        
+        # Adjust based on user's typical engagement level
+        engagement_match = 1 - abs(base_score - user_avg_engagement)
+        
+        return base_score * 0.7 + engagement_match * 0.3
+    
+    def get_analytics_summary(self):
+        """Get summary analytics of all content analysis"""
+        if not self.analysis_history:
+            return {'message': 'No analysis data available'}
+        
+        all_engagements = [
+            analysis['analysis']['predicted_engagement'] 
+            for analysis in self.analysis_history
+        ]
+        
+        genres = [
+            analysis['analysis']['genre']
+            for analysis in self.analysis_history
+        ]
+        
+        return {
+            'total_analyses': len(self.analysis_history),
+            'avg_content_engagement': float(np.mean(all_engagements)),
+            'genre_distribution': {genre: genres.count(genre) for genre in set(genres)},
+            'engagement_trends': {
+                'high': sum(1 for e in all_engagements if e > 0.7),
+                'medium': sum(1 for e in all_engagements if 0.4 <= e <= 0.7), 
+                'low': sum(1 for e in all_engagements if e < 0.4)
+            }
+        }
