@@ -558,4 +558,65 @@ body {
 
 .ai-brain {
     animation: brain-pulse 2s infinite;
+    }
+    /* Interactive AI Recommendation Buttons */
+.ai-recommendation-btn {
+    transition: all 0.3s ease;
+    border: 1px solid var(--neural-blue);
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(70, 211, 105, 0.1));
+}
+
+.ai-recommendation-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    background: linear-gradient(45deg, var(--neural-blue), var(--neural-green));
+    color: white;
+    border-color: var(--neural-blue);
+}
+
+.ai-recommendation-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.4);
+}
+
+.ai-recommendation-btn.btn-danger:hover {
+    background: linear-gradient(45deg, var(--netflix-red), var(--neural-orange));
+}
+
+.ai-recommendation-btn.btn-warning:hover {
+    background: linear-gradient(45deg, var(--neural-orange), #ff8c42);
+}
+
+/* AI Action Feedback */
+.alert-sm {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    border: 1px solid var(--neural-green);
+    background: linear-gradient(135deg, rgba(70, 211, 105, 0.1), rgba(70, 211, 105, 0.05));
+}
+
+/* Recommendation Counter Badge */
+#recommendationCount {
+    animation: pulse-count 2s infinite;
+}
+
+@keyframes pulse-count {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Content Switch Animation */
+.content-switch-animation {
+    animation: content-fade 2s ease-in-out;
+}
+
+@keyframes content-fade {
+    0% { opacity: 0; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 1; transform: scale(1); }
 }
