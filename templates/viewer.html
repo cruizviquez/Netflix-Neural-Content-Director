@@ -1,0 +1,564 @@
+{% extends "base.html" %}
+
+{% block title %}Neural Viewer - Real-time Content Optimization{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main Video Area -->
+        <div class="col-lg-8">
+            <div class="netflix-card">
+                <h2 class="card-title mb-3">
+                    <i class="fas fa-play-circle text-danger me-2"></i>
+                    Neural Content Director
+                    <span class="live-indicator ms-2">
+                        <span class="live-dot"></span>
+                        LIVE AI
+                    </span>
+                </h2>
+                
+                <!-- Video Player -->
+                <div class="video-container mb-4">
+                    <div class="video-placeholder" id="videoPlayer">
+                        <i class="fas fa-film mb-3" style="font-size: 4rem;"></i>
+                        <h4>Action Thriller Demo</h4>
+                        <p>AI-optimized content delivery</p>
+                        <small class="text-muted">Click controls below to simulate viewing</small>
+                    </div>
+                    
+                    <!-- Video Controls -->
+                    <div class="video-controls">
+                        <button class="play-btn" id="playBtn">
+                            <i class="fas fa-play" id="playIcon"></i>
+                        </button>
+                        
+                        <div class="video-progress" id="progressBar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        
+                        <span class="text-white" id="timeDisplay">00:00 / 45:00</span>
+                        
+                        <div class="ms-auto d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light" id="rewindBtn">
+                                <i class="fas fa-backward"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-light" id="skipBtn">
+                                <i class="fas fa-forward"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-light" id="pauseBtn">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Engagement Meter -->
+                <div class="mb-4">
+                    <div class="engagement-label">
+                        <span>
+                            <i class="fas fa-heartbeat text-danger me-1"></i>
+                            Real-time Engagement Score
+                        </span>
+                        <span class="engagement-score" id="engagementScore">78%</span>
+                    </div>
+                    <div class="engagement-meter">
+                        <div class="engagement-fill" id="engagementFill" style="width: 78%;"></div>
+                    </div>
+                    <small class="text-muted">AI analyzes your viewing patterns to optimize content delivery</small>
+                </div>
+                
+                <!-- Current Content Info -->
+                <div class="netflix-card bg-secondary">
+                    <h5>
+                        <i class="fas fa-info-circle text-info me-2"></i>
+                        Currently Playing
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Title:</strong> <span id="contentTitle">Action Thriller Demo</span></p>
+                            <p class="mb-1"><strong>Genre:</strong> <span id="contentGenre">Action</span></p>
+                            <p class="mb-1"><strong>Duration:</strong> <span id="contentDuration">45 minutes</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>AI Confidence:</strong> <span id="aiConfidence" class="text-success">87%</span></p>
+                            <p class="mb-1"><strong>Scene Type:</strong> <span id="currentScene">Opening Sequence</span></p>
+                            <p class="mb-1"><strong>Optimization Status:</strong> <span id="optimizationStatus" class="text-primary">Active</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Insights Sidebar -->
+        <div class="col-lg-4">
+            <!-- AI Recommendations -->
+            <div class="netflix-card mb-4">
+                <h5 class="card-title">
+                    <i class="fas fa-brain text-primary me-2"></i>
+                    AI Recommendations
+                </h5>
+                <div id="aiRecommendations">
+                    <div class="ai-insight">
+                        <div class="ai-insight-header">
+                            <i class="fas fa-lightbulb ai-insight-icon"></i>
+                            <strong>Content Optimization</strong>
+                        </div>
+                        <p class="mb-1">Your engagement is high! AI suggests:</p>
+                        <small class="text-muted">Continue current pacing • Confidence: 85%</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-time Stats -->
+            <div class="netflix-card mb-4">
+                <h5 class="card-title">
+                    <i class="fas fa-chart-pulse text-warning me-2"></i>
+                    Live Analytics
+                </h5>
+                
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="metric-card text-center p-2">
+                            <div class="metric-value" style="font-size: 1.5rem;" id="watchTime">12:34</div>
+                            <div class="metric-label">Watch Time</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="metric-card neural text-center p-2">
+                            <div class="metric-value" style="font-size: 1.5rem;" id="interactions">23</div>
+                            <div class="metric-label">Interactions</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Pause Events</span>
+                        <span id="pauseCount" class="fw-bold">3</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Rewind Events</span>
+                        <span id="rewindCount" class="fw-bold text-success">1</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Skip Events</span>
+                        <span id="skipCount" class="fw-bold text-warning">0</span>
+                    </div>
+                </div>
+                
+                <div class="engagement-meter mb-2">
+                    <div class="engagement-fill" style="width: 73%;"></div>
+                </div>
+                <div class="text-center">
+                    <small class="text-muted">Session Engagement Trend</small>
+                </div>
+            </div>
+            
+            <!-- Optimization Log -->
+            <div class="netflix-card mb-4">
+                <h5 class="card-title">
+                    <i class="fas fa-history text-success me-2"></i>
+                    Optimization Log
+                </h5>
+                <div id="optimizationLog" style="max-height: 300px; overflow-y: auto;">
+                    <div class="d-flex align-items-start mb-2">
+                        <span class="status-indicator status-online mt-1 me-2"></span>
+                        <div class="flex-grow-1">
+                            <small class="text-muted">12:34:56</small>
+                            <div class="small">AI detected high engagement - maintaining current pace</div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start mb-2">
+                        <span class="status-indicator status-processing mt-1 me-2"></span>
+                        <div class="flex-grow-1">
+                            <small class="text-muted">12:33:12</small>
+                            <div class="small">Engagement dropped - suggested scene transition</div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start mb-2">
+                        <span class="status-indicator status-online mt-1 me-2"></span>
+                        <div class="flex-grow-1">
+                            <small class="text-muted">12:31:45</small>
+                            <div class="small">Session started - initializing AI models</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="netflix-card">
+                <h5 class="card-title">
+                    <i class="fas fa-bolt text-warning me-2"></i>
+                    Quick Actions
+                </h5>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm" id="optimizeBtn">
+                        <i class="fas fa-magic me-1"></i>
+                        Force Optimization
+                    </button>
+                    <button class="btn btn-outline-success btn-sm" id="skipSceneBtn">
+                        <i class="fas fa-fast-forward me-1"></i>
+                        Skip to Action Scene
+                    </button>
+                    <button class="btn btn-outline-info btn-sm" id="showInsightsBtn">
+                        <i class="fas fa-eye me-1"></i>
+                        Show AI Insights
+                    </button>
+                    <button class="btn btn-outline-warning btn-sm" id="resetSessionBtn">
+                        <i class="fas fa-refresh me-1"></i>
+                        Reset Session
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Notification Toast -->
+<div id="aiNotification" class="toast-notification">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-robot me-2"></i>
+        <span id="notificationText">AI optimization applied</span>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Viewer Page JavaScript - Real-time Interaction Simulation
+class NeuralViewer {
+    constructor(sessionId) {
+        this.sessionId = sessionId || '{{ session_id }}';
+        this.socket = io();
+        this.isPlaying = false;
+        this.currentTime = 0;
+        this.totalTime = 45 * 60; // 45 minutes in seconds
+        this.engagementScore = 0.78;
+        this.interactions = {
+            pauses: 0,
+            rewinds: 0,
+            skips: 0,
+            total: 0
+        };
+        
+        this.initializeEventListeners();
+        this.initializeSocketConnection();
+        this.startEngagementSimulation();
+    }
+    
+    initializeEventListeners() {
+        // Video Controls
+        document.getElementById('playBtn').addEventListener('click', () => this.togglePlay());
+        document.getElementById('pauseBtn').addEventListener('click', () => this.pause());
+        document.getElementById('rewindBtn').addEventListener('click', () => this.rewind());
+        document.getElementById('skipBtn').addEventListener('click', () => this.skip());
+        
+        // Quick Actions
+        document.getElementById('optimizeBtn').addEventListener('click', () => this.forceOptimization());
+        document.getElementById('skipSceneBtn').addEventListener('click', () => this.skipToScene());
+        document.getElementById('showInsightsBtn').addEventListener('click', () => this.showInsights());
+        document.getElementById('resetSessionBtn').addEventListener('click', () => this.resetSession());
+        
+        // Progress Bar Click
+        document.getElementById('progressBar').addEventListener('click', (e) => this.seekTo(e));
+    }
+    
+    initializeSocketConnection() {
+        this.socket.on('connect', () => {
+            console.log('Connected to Neural Content Director');
+            this.addOptimizationLog('Connected to AI engine - initializing models');
+        });
+        
+        this.socket.on('content_optimization', (data) => {
+            this.handleAIOptimization(data);
+        });
+        
+        this.socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+            this.addOptimizationLog('Connection lost - attempting reconnection');
+        });
+    }
+    
+    togglePlay() {
+        this.isPlaying = !this.isPlaying;
+        const playIcon = document.getElementById('playIcon');
+        const playBtn = document.getElementById('playBtn');
+        
+        if (this.isPlaying) {
+            playIcon.className = 'fas fa-pause';
+            this.startPlayback();
+            this.sendEngagementData('play');
+        } else {
+            playIcon.className = 'fas fa-play';
+            this.sendEngagementData('pause');
+            this.interactions.pauses++;
+            this.updateInteractionCounts();
+        }
+    }
+    
+    pause() {
+        if (this.isPlaying) {
+            this.isPlaying = false;
+            document.getElementById('playIcon').className = 'fas fa-play';
+            this.sendEngagementData('pause');
+            this.interactions.pauses++;
+            this.updateInteractionCounts();
+        }
+    }
+    
+    rewind() {
+        this.currentTime = Math.max(0, this.currentTime - 30);
+        this.updateProgressBar();
+        this.sendEngagementData('rewind');
+        this.interactions.rewinds++;
+        this.updateInteractionCounts();
+        this.addOptimizationLog('User rewound content - analyzing engagement pattern');
+    }
+    
+    skip() {
+        this.currentTime = Math.min(this.totalTime, this.currentTime + 30);
+        this.updateProgressBar();
+        this.sendEngagementData('skip');
+        this.interactions.skips++;
+        this.updateInteractionCounts();
+        this.addOptimizationLog('Skip detected - AI evaluating content optimization');
+    }
+    
+    seekTo(event) {
+        const rect = event.target.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const percentage = clickX / rect.width;
+        this.currentTime = Math.floor(this.totalTime * percentage);
+        this.updateProgressBar();
+        this.sendEngagementData('seek');
+    }
+    
+    startPlayback() {
+        if (this.playbackInterval) clearInterval(this.playbackInterval);
+        
+        this.playbackInterval = setInterval(() => {
+            if (this.isPlaying && this.currentTime < this.totalTime) {
+                this.currentTime++;
+                this.updateProgressBar();
+                
+                // Simulate engagement changes
+                if (this.currentTime % 30 === 0) {
+                    this.simulateEngagementChange();
+                }
+            }
+        }, 1000);
+    }
+    
+    updateProgressBar() {
+        const percentage = (this.currentTime / this.totalTime) * 100;
+        document.getElementById('progressFill').style.width = percentage + '%';
+        
+        const currentMin = Math.floor(this.currentTime / 60);
+        const currentSec = this.currentTime % 60;
+        const totalMin = Math.floor(this.totalTime / 60);
+        const totalSec = this.totalTime % 60;
+        
+        document.getElementById('timeDisplay').textContent = 
+            `${currentMin.toString().padStart(2, '0')}:${currentSec.toString().padStart(2, '0')} / ${totalMin}:${totalSec.toString().padStart(2, '0')}`;
+        
+                     // Update watch time display
+        document.getElementById('watchTime').textContent = 
+            `${currentMin.toString().padStart(2, '0')}:${currentSec.toString().padStart(2, '0')}`;
+    }
+    
+    updateInteractionCounts() {
+        document.getElementById('pauseCount').textContent = this.interactions.pauses;
+        document.getElementById('rewindCount').textContent = this.interactions.rewinds;
+        document.getElementById('skipCount').textContent = this.interactions.skips;
+        this.interactions.total++;
+        document.getElementById('interactions').textContent = this.interactions.total;
+    }
+    
+    simulateEngagementChange() {
+        // Simulate realistic engagement variations
+        const change = (Math.random() - 0.5) * 0.2;
+        this.engagementScore = Math.max(0.1, Math.min(1.0, this.engagementScore + change));
+        this.updateEngagementDisplay();
+        
+        // Send engagement data to AI
+        this.sendEngagementData('viewing');
+    }
+    
+    updateEngagementDisplay() {
+        const percentage = Math.round(this.engagementScore * 100);
+        document.getElementById('engagementScore').textContent = percentage + '%';
+        document.getElementById('engagementFill').style.width = percentage + '%';
+        
+        // Update engagement score color
+        const scoreElement = document.getElementById('engagementScore');
+        if (percentage > 70) {
+            scoreElement.className = 'engagement-score text-success';
+        } else if (percentage > 40) {
+            scoreElement.className = 'engagement-score text-warning';
+        } else {
+            scoreElement.className = 'engagement-score text-danger';
+        }
+    }
+    
+    sendEngagementData(action) {
+        const data = {
+            session_id: this.sessionId,
+            action: action,
+            video_time: this.currentTime,
+            engagement_score: this.engagementScore,
+            timestamp: new Date().toISOString()
+        };
+        
+        this.socket.emit('engagement_data', data);
+    }
+    
+    handleAIOptimization(data) {
+        console.log('AI Optimization received:', data);
+        
+        // Update AI recommendations
+        this.updateAIRecommendations(data.recommendations);
+        
+        // Show notification
+        this.showNotification('AI optimization applied');
+        
+        // Add to optimization log
+        this.addOptimizationLog(`AI optimization: ${data.recommendations[0]?.message || 'Content optimized'}`);
+        
+        // Update engagement if AI suggests improvement
+        if (data.recommendations.length > 0) {
+            this.engagementScore = Math.min(1.0, this.engagementScore + 0.1);
+            this.updateEngagementDisplay();
+        }
+    }
+    
+    updateAIRecommendations(recommendations) {
+        const container = document.getElementById('aiRecommendations');
+        container.innerHTML = '';
+        
+        if (recommendations && recommendations.length > 0) {
+            recommendations.forEach(rec => {
+                const insight = document.createElement('div');
+                insight.className = rec.urgency === 'high' ? 'ai-insight ai-insight-urgent' : 'ai-insight';
+                insight.innerHTML = `
+                    <div class="ai-insight-header">
+                        <i class="fas fa-robot ai-insight-icon"></i>
+                        <strong>${rec.action.replace('_', ' ').toUpperCase()}</strong>
+                        <span class="badge bg-primary ms-auto">${Math.round(rec.confidence * 100)}%</span>
+                    </div>
+                    <p class="mb-1">${rec.message}</p>
+                    <small class="text-muted">Confidence: ${Math.round(rec.confidence * 100)}% • Priority: ${rec.urgency}</small>
+                `;
+                container.appendChild(insight);
+            });
+        } else {
+            container.innerHTML = `
+                <div class="ai-insight">
+                    <div class="ai-insight-header">
+                        <i class="fas fa-check-circle ai-insight-icon text-success"></i>
+                        <strong>Optimal Performance</strong>
+                    </div>
+                    <p class="mb-1">Content is performing well - no optimization needed</p>
+                    <small class="text-muted">AI monitoring continues...</small>
+                </div>
+            `;
+        }
+    }
+    
+    addOptimizationLog(message) {
+        const log = document.getElementById('optimizationLog');
+        const timestamp = new Date().toLocaleTimeString();
+        
+        const logEntry = document.createElement('div');
+        logEntry.className = 'd-flex align-items-start mb-2';
+        logEntry.innerHTML = `
+            <span class="status-indicator status-online mt-1 me-2"></span>
+            <div class="flex-grow-1">
+                <small class="text-muted">${timestamp}</small>
+                <div class="small">${message}</div>
+            </div>
+        `;
+        
+        log.insertBefore(logEntry, log.firstChild);
+        
+        // Keep only last 10 entries
+        while (log.children.length > 10) {
+            log.removeChild(log.lastChild);
+        }
+    }
+    
+    showNotification(message) {
+        const notification = document.getElementById('aiNotification');
+        document.getElementById('notificationText').textContent = message;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    
+    forceOptimization() {
+        this.addOptimizationLog('Manual optimization requested - AI analyzing content');
+        this.sendEngagementData('force_optimization');
+        this.showNotification('AI optimization in progress...');
+    }
+    
+    skipToScene() {
+        this.currentTime = Math.min(this.totalTime, this.currentTime + 300); // Skip 5 minutes
+        this.updateProgressBar();
+        this.addOptimizationLog('Jumped to action scene - analyzing user preference');
+        this.sendEngagementData('scene_skip');
+        this.showNotification('Skipped to high-action scene');
+    }
+    
+    showInsights() {
+        this.addOptimizationLog('AI insights displayed to user');
+        this.showNotification('Detailed AI analysis available');
+    }
+    
+    resetSession() {
+        this.currentTime = 0;
+        this.engagementScore = 0.78;
+        this.interactions = { pauses: 0, rewinds: 0, skips: 0, total: 0 };
+        this.updateProgressBar();
+        this.updateEngagementDisplay();
+        this.updateInteractionCounts();
+        this.addOptimizationLog('Session reset - AI models reinitialized');
+        this.showNotification('Session reset successfully');
+    }
+    
+    startEngagementSimulation() {
+        // Simulate realistic engagement patterns
+        setInterval(() => {
+            if (this.isPlaying) {
+                // Randomly adjust engagement based on "content type"
+                const sceneTypes = ['intro', 'dialogue', 'action', 'climax'];
+                const currentScene = sceneTypes[Math.floor(this.currentTime / 675)]; // 45min/4 scenes
+                
+                document.getElementById('currentScene').textContent = 
+                    currentScene.charAt(0).toUpperCase() + currentScene.slice(1) + ' Scene';
+                
+                // Adjust engagement based on scene type
+                let targetEngagement;
+                switch(currentScene) {
+                    case 'action': targetEngagement = 0.9; break;
+                    case 'climax': targetEngagement = 0.95; break;
+                    case 'dialogue': targetEngagement = 0.5; break;
+                    default: targetEngagement = 0.7;
+                }
+                
+                // Gradually move towards target engagement
+                const diff = targetEngagement - this.engagementScore;
+                this.engagementScore += diff * 0.1;
+                this.updateEngagementDisplay();
+            }
+        }, 5000);
+    }
+}
+
+// Initialize Neural Viewer when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const viewer = new NeuralViewer();
+    console.log('Neural Content Director Viewer initialized');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Neural Content Director{% endblock %}</title>
+    
+    <!-- Netflix-style favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/netflix-logo.png') }}" type="image/png">
+    
+    <!-- Bootstrap for quick styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Socket.IO for real-time communication -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/netflix_style.css') }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg netflix-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-brain text-danger me-2"></i>
+                <span class="netflix-logo">NEURAL CONTENT DIRECTOR</span>
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('index') }}">
+                    <i class="fas fa-home me-1"></i> Home
+                </a>
+                <a class="nav-link" href="{{ url_for('viewer') }}">
+                    <i class="fas fa-play me-1"></i> Viewer
+                </a>
+                <a class="nav-link" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-chart-line me-1"></i> Dashboard
+                </a>
+                <a class="nav-link" href="{{ url_for('analytics') }}">
+                    <i class="fas fa-brain me-1"></i> AI Analytics
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="netflix-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="netflix-footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">
+                        <i class="fas fa-robot me-2"></i>
+                        Neural Content Director - AI-Powered Content Optimization
+                    </p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="mb-0">
+                        <i class="fas fa-flask me-2"></i>
+                        Built with Machine Learning & Real-time Analytics
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,561 @@
+/* Netflix-inspired Neural Content Director Styles */
+
+:root {
+    --netflix-red: #e50914;
+    --netflix-black: #141414;
+    --netflix-dark-gray: #222222;
+    --netflix-gray: #333333;
+    --netflix-light-gray: #757575;
+    --netflix-white: #ffffff;
+    --neural-blue: #00d4ff;
+    --neural-green: #46d369;
+    --neural-orange: #ff6b35;
+    --neural-purple: #8b5cf6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--netflix-black);
+    color: var(--netflix-white);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Navigation */
+.netflix-nav {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--netflix-gray);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.netflix-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--netflix-red);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.navbar-nav .nav-link {
+    color: var(--netflix-white) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    border-radius: 20px;
+    padding: 8px 16px !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--netflix-red) !important;
+    background-color: rgba(229, 9, 20, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Main Content */
+.netflix-main {
+    margin-top: 80px;
+    min-height: calc(100vh - 160px);
+    padding: 20px 0;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--netflix-black) 0%, var(--netflix-dark-gray) 100%);
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23333" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, var(--netflix-red), var(--neural-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: var(--netflix-light-gray);
+}
+
+/* Buttons */
+.btn-netflix {
+    background: linear-gradient(45deg, var(--netflix-red), #ff0a1a);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-netflix:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.5);
+    color: white;
+}
+
+.btn-neural {
+    background: linear-gradient(45deg, var(--neural-blue), #0099cc);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.btn-neural:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+    color: white;
+}
+
+.btn-outline-light {
+    border: 2px solid var(--netflix-white);
+    color: var(--netflix-white);
+    background: transparent;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: var(--netflix-white);
+    color: var(--netflix-black);
+    transform: translateY(-3px);
+}
+
+/* Cards */
+.netflix-card {
+    background: linear-gradient(135deg, var(--netflix-dark-gray) 0%, var(--netflix-gray) 100%);
+    border: 1px solid var(--netflix-gray);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.netflix-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    border-color: var(--netflix-red);
+}
+
+.card-title {
+    color: var(--netflix-red);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Video Player Styles */
+.video-container {
+    position: relative;
+    background: var(--netflix-black);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(45deg, var(--netflix-dark-gray), var(--netflix-gray));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--netflix-light-gray);
+    flex-direction: column;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.play-btn {
+    background: var(--netflix-red);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+}
+
+.video-progress {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--netflix-red);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Engagement Meter */
+.engagement-meter {
+    width: 100%;
+    height: 8px;
+    background: var(--netflix-gray);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.engagement-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--netflix-red), var(--neural-green));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.engagement-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.engagement-score {
+    font-weight: bold;
+    color: var(--neural-green);
+}
+
+/* AI Insights */
+.ai-insight {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(70, 211, 105, 0.1));
+    border: 1px solid var(--neural-blue);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+}
+
+.ai-insight-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ai-insight-icon {
+    color: var(--neural-blue);
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.ai-insight-urgent {
+    border-color: var(--neural-orange);
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+}
+
+.ai-insight-urgent .ai-insight-icon {
+    color: var(--neural-orange);
+}
+
+/* Analytics Charts */
+.chart-container {
+    position: relative;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Metrics */
+.metric-card {
+    background: linear-gradient(135deg, var(--netflix-red), #cc0712);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
+}
+
+.metric-card.neural {
+    background: linear-gradient(135deg, var(--neural-blue), #0088cc);
+}
+
+.metric-card.success {
+    background: linear-gradient(135deg, var(--neural-green), #33bb55);
+}
+
+.metric-card.warning {
+    background: linear-gradient(135deg, var(--neural-orange), #ee5522);
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-online {
+    background: var(--neural-green);
+    box-shadow: 0 0 10px rgba(70, 211, 105, 0.5);
+}
+
+.status-offline {
+    background: var(--netflix-light-gray);
+}
+
+.status-processing {
+    background: var(--neural-orange);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Real-time Updates */
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    background: var(--neural-green);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: live-pulse 1s infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+/* Footer */
+.netflix-footer {
+    background: var(--netflix-dark-gray);
+    border-top: 1px solid var(--netflix-gray);
+    padding: 20px 0;
+    color: var(--netflix-light-gray);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .netflix-card {
+        padding: 15px;
+    }
+    
+    .video-placeholder {
+        height: 250px;
+        font-size: 1.5rem;
+    }
+    
+    .chart-container {
+        height: 200px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+    }
+    
+    .btn-netflix,
+    .btn-neural {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--netflix-dark-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--netflix-red);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff1a2b;
+}
+
+/* Loading Animation */
+.loading-spinner {
+    border: 3px solid var(--netflix-gray);
+    border-top: 3px solid var(--netflix-red);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Notification Toast */
+.toast-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--neural-blue), var(--neural-green));
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    z-index: 1050;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+}
+
+/* AI Brain Animation */
+@keyframes brain-pulse {
+    0%, 100% {
+        transform: scale(1);
+        color: var(--neural-blue);
+    }
+    50% {
+        transform: scale(1.1);
+        color: var(--neural-green);
+    }
+}
+
+.ai-brain {
+    animation: brain-pulse 2s infinite;
+}
