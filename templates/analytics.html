@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+
+{% block title %}AI Analytics - Neural Content Director{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- AI Analytics Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-1">
+                        <i class="fas fa-brain text-primary me-2 ai-brain"></i>
+                        AI Analytics & Insights
+                    </h1>
+                    <p class="text-muted mb-0">Deep learning insights and neural network performance</p>
+                </div>
+                <div>
+                    <span class="live-indicator">
+                        <span class="live-dot"></span>
+                        AI ACTIVE
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Model Performance -->
+    <div class="row mb-4">
+        <div class="col-lg-4 mb-3">
+            <div class="netflix-card h-100">
+                <h5 class="card-title text-primary">
+                    <i class="fas fa-robot me-2"></i>
+                    Neural Network Status
+                </h5>
+                <div class="text-center mb-3">
+                    <div class="loading-spinner mb-3" style="width: 50px; height: 50px;"></div>
+                    <p class="fw-bold text-success">Models Online & Learning</p>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Engagement Predictor</span>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Content Optimizer</span>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Real-time Inference</span>
+                        <span class="status-indicator status-processing"></span>
+                    </div>
+                </div>
+                
+                <div class="ai-insight">
+                    <div class="ai-insight-header">
+                        <i class="fas fa-lightbulb ai-insight-icon"></i>
+                        <strong>AI Status</strong>
+                    </div>
+                    <p class="mb-1">All neural networks operational</p>
+                    <small class="text-muted">Last training: 2 hours ago • Next: 4 hours</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8 mb-3">
+            <div class="netflix-card h-100">
+                <h5 class="card-title text-warning">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Model Performance Metrics
+                </h5>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3 text-center">
+                        <div class="metric-value text-success">87%</div>
+                        <div class="metric-label">Prediction Accuracy</div>
+                        <div class="engagement-meter mt-2">
+                            <div class="engagement-fill" style="width: 87%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="metric-value text-primary">23ms</div>
+                        <div class="metric-label">Response Time</div>
+                        <div class="engagement-meter mt-2">
+                            <div class="engagement-fill bg-primary" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="metric-value text-warning">76%</div>
+                        <div class="metric-label">Optimization Success</div>
+                        <div class="engagement-meter mt-2">
+                            <div class="engagement-fill bg-warning" style="width: 76%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="metric-value text-info">4.2</div>
+                        <div class="metric-label">User Satisfaction</div>
+                        <div class="engagement-meter mt-2">
+                            <div class="engagement-fill bg-info" style="width: 84%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h6 class="text-info mb-3">Recent AI Achievements:</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-trophy text-warning me-2"></i>
+                        <strong>+23% engagement improvement</strong> across all content
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-target text-success me-2"></i>
+                        <strong>87% prediction accuracy</strong> for user behavior
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-rocket text-primary me-2"></i>
+                        <strong>2,847 successful optimizations</strong> this week
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live AI Insights -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="netflix-card">
+                <h5 class="card-title text-danger">
+                    <i class="fas fa-brain me-2"></i>
+                    Live AI Insights & Recommendations
+                </h5>
+                
+                <div class="row" id="liveInsights">
+                    <!-- Insights will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analytics -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title text-success">
+                    <i class="fas fa-cogs me-2"></i>
+                    Content Optimization Analysis
+                </h5>
+                <p class="text-muted">AI-driven content modification insights</p>
+                
+                <div class="mb-4">
+                    <h6>Optimization Categories:</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Pacing Adjustments</span>
+                        <span class="fw-bold text-primary">45%</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Scene Reordering</span>
+                        <span class="fw-bold text-warning">32%</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Content Highlighting</span>
+                        <span class="fw-bold text-success">23%</span>
+                    </div>
+                </div>
+                
+                <div class="ai-insight ai-insight-urgent">
+                    <div class="ai-insight-header">
+                        <i class="fas fa-exclamation-triangle ai-insight-icon"></i>
+                        <strong>Optimization Alert</strong>
+                    </div>
+                    <p class="mb-1">Content "Drama Series Demo" showing 34% engagement drop at 8:30 mark</p>
+                    <p class="mb-0"><strong>AI Recommendation:</strong> Implement scene reordering for 15% engagement boost</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title text-info">
+                    <i class="fas fa-users me-2"></i>
+                    User Behavior Patterns
+                </h5>
+                <p class="text-muted">Neural network analysis of viewing habits</p>
+                
+                <div class="mb-4">
+                    <h6>Engagement Patterns:</h6>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="text-center">
+                                <div class="metric-value text-success" style="font-size: 2rem;">78%</div>
+                                <div class="metric-label">Peak Engagement</div>
+                                <small class="text-muted">Action scenes</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center">
+                                <div class="metric-value text-warning" style="font-size: 2rem;">45%</div>
+                                <div class="metric-label">Low Engagement</div>
+                                <small class="text-muted">Dialogue scenes</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div
+                                <div class="ai-insight">
+                    <div class="ai-insight-header">
+                        <i class="fas fa-chart-bar ai-insight-icon"></i>
+                        <strong>Behavioral Insight</strong>
+                    </div>
+                    <p class="mb-1">Users who rewind content show 34% higher overall engagement</p>
+                    <p class="mb-0"><strong>AI Action:</strong> Implementing rewind-friendly content markers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+class AIAnalytics {
+    constructor() {
+        this.initializeLiveInsights();
+        this.startInsightUpdates();
+    }
+    
+    initializeLiveInsights() {
+        const insights = [
+            {
+                type: 'engagement',
+                title: 'High Engagement Detected',
+                message: 'User engagement at 89% - maintaining optimal content flow',
+                icon: 'fas fa-heart',
+                color: 'success',
+                urgency: 'low'
+            },
+            {
+                type: 'optimization',
+                title: 'Content Optimization Applied',
+                message: 'Scene pacing increased by 15% - engagement improved to 76%',
+                icon: 'fas fa-magic',
+                color: 'primary',
+                urgency: 'medium'
+            },
+            {
+                type: 'prediction',
+                title: 'Behavior Prediction',
+                message: 'AI predicts 92% probability user will complete episode',
+                icon: 'fas fa-crystal-ball',
+                color: 'info',
+                urgency: 'low'
+            },
+            {
+                type: 'alert',
+                title: 'Engagement Drop Alert',
+                message: 'Multiple users abandoning content at 12:30 - optimization recommended',
+                icon: 'fas fa-exclamation-triangle',
+                color: 'warning',
+                urgency: 'high'
+            }
+        ];
+        
+        this.updateLiveInsights(insights);
+    }
+    
+    updateLiveInsights(insights) {
+        const container = document.getElementById('liveInsights');
+        container.innerHTML = '';
+        
+        insights.forEach(insight => {
+            const insightElement = document.createElement('div');
+            insightElement.className = 'col-lg-6 col-md-12 mb-3';
+            
+            const urgencyClass = insight.urgency === 'high' ? 'ai-insight-urgent' : 'ai-insight';
+            
+            insightElement.innerHTML = `
+                <div class="${urgencyClass}">
+                    <div class="ai-insight-header">
+                        <i class="${insight.icon} ai-insight-icon"></i>
+                        <strong>${insight.title}</strong>
+                        <span class="badge bg-${insight.color} ms-auto">${insight.urgency.toUpperCase()}</span>
+                    </div>
+                    <p class="mb-1">${insight.message}</p>
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        ${new Date().toLocaleTimeString()}
+                    </small>
+                </div>
+            `;
+            
+            container.appendChild(insightElement);
+        });
+    }
+    
+    startInsightUpdates() {
+        // Update insights every 10 seconds
+        setInterval(() => {
+            this.generateRandomInsight();
+        }, 10000);
+        
+        // Add some animation to AI brain icon
+        setInterval(() => {
+            document.querySelector('.ai-brain').style.color = 
+                document.querySelector('.ai-brain').style.color === 'rgb(70, 211, 105)' ? '#00d4ff' : '#46d369';
+        }, 2000);
+    }
+    
+    generateRandomInsight() {
+        const insightTypes = [
+            {
+                title: 'Real-time Optimization',
+                message: 'AI adjusted content pacing - engagement up 12%',
+                icon: 'fas fa-robot',
+                color: 'success'
+            },
+            {
+                title: 'Predictive Analysis',
+                message: 'Neural network predicts optimal scene transition in 30 seconds',
+                icon: 'fas fa-brain',
+                color: 'primary'
+            },
+            {
+                title: 'User Behavior Update',
+                message: 'New viewing pattern detected - updating recommendation model',
+                icon: 'fas fa-user-chart',
+                color: 'info'
+            }
+        ];
+        
+        const randomInsight = insightTypes[Math.floor(Math.random() * insightTypes.length)];
+        
+        // Add new insight to the top
+        const container = document.getElementById('liveInsights');
+        const newInsight = document.createElement('div');
+        newInsight.className = 'col-lg-6 col-md-12 mb-3';
+        newInsight.style.opacity = '0';
+        newInsight.style.transform = 'translateY(-20px)';
+        
+        newInsight.innerHTML = `
+            <div class="ai-insight">
+                <div class="ai-insight-header">
+                    <i class="${randomInsight.icon} ai-insight-icon"></i>
+                    <strong>${randomInsight.title}</strong>
+                    <span class="live-indicator ms-auto">
+                        <span class="live-dot"></span>
+                        NEW
+                    </span>
+                </div>
+                <p class="mb-1">${randomInsight.message}</p>
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    ${new Date().toLocaleTimeString()}
+                </small>
+            </div>
+        `;
+        
+        container.insertBefore(newInsight, container.firstChild);
+        
+        // Animate in
+        setTimeout(() => {
+            newInsight.style.opacity = '1';
+            newInsight.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // Remove old insights (keep last 6)
+        while (container.children.length > 6) {
+            container.removeChild(container.lastChild);
+        }
+    }
+}
+
+// Initialize AI Analytics when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const aiAnalytics = new AIAnalytics();
+    console.log('AI Analytics initialized');
+    
+    // Add some interactive effects
+    document.querySelectorAll('.ai-insight').forEach(insight => {
+        insight.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+        });
+        
+        insight.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+</script>
+{% endblock %}

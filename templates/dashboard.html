@@ -1,0 +1,523 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics Dashboard - Neural Content Director{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Dashboard Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-1">
+                        <i class="fas fa-chart-line text-primary me-2"></i>
+                        Analytics Dashboard
+                    </h1>
+                    <p class="text-muted mb-0">Real-time Neural Content Director Performance</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <span class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE DATA
+                    </span>
+                    <button class="btn btn-outline-primary btn-sm" id="refreshBtn">
+                        <i class="fas fa-sync me-1"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Metrics Row -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="metric-card">
+                <div class="metric-value" id="totalSessions">0</div>
+                <div class="metric-label">Active Sessions</div>
+                <div class="mt-2">
+                    <i class="fas fa-users me-1"></i>
+                    <small class="text-light">Real-time viewers</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="metric-card neural">
+                <div class="metric-value" id="avgEngagement">0%</div>
+                <div class="metric-label">Average Engagement</div>
+                <div class="mt-2">
+                    <i class="fas fa-heart me-1"></i>
+                    <small class="text-light">Across all sessions</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="metric-card success">
+                <div class="metric-value" id="optimizations">0</div>
+                <div class="metric-label">AI Optimizations</div>
+                <div class="mt-2">
+                    <i class="fas fa-magic me-1"></i>
+                    <small class="text-light">Content modifications</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="metric-card warning">
+                <div class="metric-value" id="modelAccuracy">87%</div>
+                <div class="metric-label">Model Accuracy</div>
+                <div class="mt-2">
+                    <i class="fas fa-bullseye me-1"></i>
+                    <small class="text-light">Prediction success rate</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-chart-area text-primary me-2"></i>
+                    Real-time Engagement Trends
+                </h5>
+                <div class="chart-container">
+                    <canvas id="engagementChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-pie-chart text-success me-2"></i>
+                    Content Performance
+                </h5>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analytics Row -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-brain text-warning me-2"></i>
+                    AI Model Performance
+                </h5>
+                
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Engagement Prediction</span>
+                            <span class="text-success fw-bold">87%</span>
+                        </div>
+                        <div class="engagement-meter">
+                            <div class="engagement-fill" style="width: 87%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Content Optimization</span>
+                            <span class="text-success fw-bold">76%</span>
+                        </div>
+                        <div class="engagement-meter">
+                            <div class="engagement-fill" style="width: 76%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Response Time</span>
+                            <span class="text-primary fw-bold">43ms</span>
+                        </div>
+                        <div class="engagement-meter">
+                            <div class="engagement-fill bg-primary" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>User Satisfaction</span>
+                            <span class="text-warning fw-bold">4.2/5</span>
+                        </div>
+                        <div class="engagement-meter">
+                            <div class="engagement-fill bg-warning" style="width: 84%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <h6 class="text-primary">Recent Model Updates:</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="small mb-1">
+                            <i class="fas fa-check-circle text-success me-1"></i>
+                            Engagement predictor retrained - accuracy +3%
+                        </li>
+                        <li class="small mb-1">
+                            <i class="fas fa-sync text-primary me-1"></i>
+                            Content optimizer updated with new features
+                        </li>
+                        <li class="small">
+                            <i class="fas fa-chart-line text-warning me-1"></i>
+                            Real-time inference pipeline optimized
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="netflix-card">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-users text-info me-2"></i>
+                    User Behavior Insights
+                </h5>
+                
+                <div class="mb-4">
+                    <h6 class="text-info">Engagement Distribution</h6>
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <div class="metric-value text-success" style="font-size: 1.8rem;" id="highEngagement">67%</div>
+                            <div class="metric-label">High (>70%)</div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="metric-value text-warning" style="font-size: 1.8rem;" id="mediumEngagement">28%</div>
+                            <div class="metric-label">Medium (40-70%)</div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="metric-value text-danger" style="font-size: 1.8rem;" id="lowEngagement">5%</div>
+                            <div class="metric-label">Low (<40%)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6 class="text-info">Most Common Actions</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-play me-1"></i> Play Events</span>
+                        <span class="fw-bold">2,847</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-pause me-1"></i> Pause Events</span>
+                        <span class="fw-bold">1,234</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-backward me-1"></i> Rewind Events</span>
+                        <span class="fw-bold">567</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-forward me-1"></i> Skip Events</span>
+                        <span class="fw-bold">432</span>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <h6 class="text-info">Content Preferences:</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">Top Genre:</small><br>
+                            <span class="fw-bold text-primary">Action (45%)</span>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Avg. Session:</small><br>
+                            <span class="fw-bold text-success">23.4 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status Row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="netflix-card">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-server text-secondary me-2"></i>
+                    System Status & Performance
+                </h5>
+                
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="status-indicator status-online me-2"></span>
+                            <div>
+                                <div class="fw-bold">AI Engine</div>
+                                <small class="text-success">Online • 99.9% uptime</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="status-indicator status-online me-2"></span>
+                            <div>
+                                <div class="fw-bold">WebSocket Server</div>
+                                <small class="text-success">Connected • 156 active</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="status-indicator status-processing me-2"></span>
+                            <div>
+                                <div class="fw-bold">Model Training</div>
+                                <small class="text-warning">Processing • Next: 2h 15m</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="status-indicator status-online me-2"></span>
+                            <div>
+                                <div class="fw-bold">Database</div>
+                                <small class="text-success">Optimal • 12ms latency</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+class DashboardAnalytics {
+    constructor() {
+        this.engagementChart = null;
+        this.performanceChart = null;
+        
+        this.initializeCharts();
+        this.startRealTimeUpdates();
+        this.loadInitialData();
+        
+        // Refresh button
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            this.loadAnalyticsData();
+        });
+    }
+    
+    initializeCharts() {
+        // Engagement Trends Chart
+        const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+        this.engagementChart = new Chart(engagementCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Average Engagement',
+                    data: [],
+                    borderColor: '#e50914',
+                    backgroundColor: 'rgba(229, 9, 20, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#ffffff' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#ffffff' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        ticks: { 
+                            color: '#ffffff',
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        min: 0,
+                        max: 100
+                    }
+                }
+            }
+        });
+        
+        // Performance Pie Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        this.performanceChart = new Chart(performanceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['High Engagement', 'Medium Engagement', 'Low Engagement'],
+                datasets: [{
+                    data: [67, 28, 5],
+                    backgroundColor: ['#46d369', '#ff6b35', '#e50914'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                                                labels: {
+                            color: '#ffffff',
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    startRealTimeUpdates() {
+        // Update charts every 5 seconds
+        setInterval(() => {
+            this.updateEngagementChart();
+            this.updateMetrics();
+        }, 5000);
+        
+        // Simulate real-time data
+        setInterval(() => {
+            this.simulateRealtimeData();
+        }, 2000);
+    }
+    
+    loadInitialData() {
+        // Load initial analytics data
+        this.loadAnalyticsData();
+        
+        // Initialize engagement chart with sample data
+        const now = new Date();
+        const labels = [];
+        const data = [];
+        
+        for (let i = 9; i >= 0; i--) {
+            const time = new Date(now - i * 30000); // 30 seconds intervals
+            labels.push(time.toLocaleTimeString());
+            data.push(Math.floor(Math.random() * 30) + 60); // Random engagement 60-90%
+        }
+        
+        this.engagementChart.data.labels = labels;
+        this.engagementChart.data.datasets[0].data = data;
+        this.engagementChart.update();
+    }
+    
+    loadAnalyticsData() {
+        fetch('/api/analytics')
+            .then(response => response.json())
+            .then(data => {
+                this.updateDashboard(data);
+            })
+            .catch(error => {
+                console.error('Error loading analytics:', error);
+            });
+    }
+    
+    updateDashboard(data) {
+        // Update main metrics
+        document.getElementById('totalSessions').textContent = data.total_sessions || 0;
+        document.getElementById('avgEngagement').textContent = 
+            Math.round((data.avg_engagement || 0) * 100) + '%';
+        document.getElementById('optimizations').textContent = 
+            data.content_modifications || 0;
+        
+        // Update performance metrics from data
+        if (data.performance_metrics) {
+            document.getElementById('modelAccuracy').textContent = 
+                Math.round(data.performance_metrics.model_accuracy * 100) + '%';
+        }
+        
+        // Add some visual feedback
+        this.animateMetricUpdate();
+    }
+    
+    updateEngagementChart() {
+        const chart = this.engagementChart;
+        const now = new Date();
+        
+        // Add new data point
+        chart.data.labels.push(now.toLocaleTimeString());
+        chart.data.datasets[0].data.push(Math.floor(Math.random() * 20) + 70);
+        
+        // Remove old data (keep last 10 points)
+        if (chart.data.labels.length > 10) {
+            chart.data.labels.shift();
+            chart.data.datasets[0].data.shift();
+        }
+        
+        chart.update('none');
+    }
+    
+    updateMetrics() {
+        // Simulate metric changes
+        const currentSessions = parseInt(document.getElementById('totalSessions').textContent) || 0;
+        const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+        const newSessions = Math.max(0, currentSessions + change);
+        
+        document.getElementById('totalSessions').textContent = newSessions;
+        
+        // Update optimizations counter
+        const currentOpt = parseInt(document.getElementById('optimizations').textContent) || 0;
+        if (Math.random() > 0.7) { // 30% chance to increment
+            document.getElementById('optimizations').textContent = currentOpt + 1;
+        }
+    }
+    
+    simulateRealtimeData() {
+        // Update engagement distribution with slight variations
+        const high = Math.floor(Math.random() * 10) + 60; // 60-70%
+        const low = Math.floor(Math.random() * 5) + 3;    // 3-8%
+        const medium = 100 - high - low;
+        
+        document.getElementById('highEngagement').textContent = high + '%';
+        document.getElementById('mediumEngagement').textContent = medium + '%';
+        document.getElementById('lowEngagement').textContent = low + '%';
+        
+        // Update performance chart
+        this.performanceChart.data.datasets[0].data = [high, medium, low];
+        this.performanceChart.update('none');
+    }
+    
+    animateMetricUpdate() {
+        // Add subtle animation to updated metrics
+        const metrics = document.querySelectorAll('.metric-value');
+        metrics.forEach(metric => {
+            metric.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                metric.style.transform = 'scale(1)';
+            }, 200);
+        });
+    }
+}
+
+// Initialize dashboard when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const dashboard = new DashboardAnalytics();
+    console.log('Dashboard analytics initialized');
+    
+    // Add some interactive hover effects
+    document.querySelectorAll('.metric-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+</script>
+{% endblock %}
